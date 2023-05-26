@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:test/widgets/custom_dialog.dart';
+import 'package:test/Screens/fifth_screen.dart';
+import 'package:test/Screens/fourth_screen.dart';
+import 'package:test/Screens/home_screen.dart';
+import 'package:test/Screens/second_screen.dart';
+import 'package:test/Screens/third_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,16 +14,24 @@ class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<MyApp> createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> {
   bool isSpring = true;
   int _selectedIndex = 0;
   var isDialOpen = ValueNotifier<bool>(false);
+  List<Widget> pages = [
+    const HomeScreen(),
+    const SecondScreen(),
+    const ThirdScreen(),
+    const FourthScreen(),
+    const FifthScreen(),
+  ];
 
   @override
   void initState() {
+    print('first screen init');
     super.initState();
   }
 
@@ -53,25 +65,7 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         drawer: setDrawer(),
         appBar: setAppBar(),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  isSpring = !isSpring;
-                });
-              },
-              child: const Center(
-                child: Text(
-                  'Theme change',
-                  style: TextStyle(color: Colors.black, fontSize: 30),
-                ),
-              ),
-            ),
-            CustomDialog()
-          ],
-        ),
+        body: pages[_selectedIndex],
         bottomNavigationBar: setNavigationBar(context),
         floatingActionButton: setFloatingActionButton(context),
       ),
